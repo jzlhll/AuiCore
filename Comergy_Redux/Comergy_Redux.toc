@@ -16,5 +16,3 @@ comergy_utils.lua
 
 comergy.xml
 
-
-## X-Vendor: AbyUI

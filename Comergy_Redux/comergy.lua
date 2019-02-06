@@ -1230,11 +1230,9 @@ function ChiStatus()
 
     local class, chiType = status.playerClass, nil
 	local specid = GetSpecialization()
-	print("specid "..tostring(specid))
     if (class == MONK and specid == 3) then
         chiType = SPELL_POWER_CHI
     elseif (class == PALADIN) then
-		print("class "..tostring(class))
         chiType = specid == 3 and SPELL_POWER_HOLY_POWER
     elseif (class == WARLOCK) then
         chiType = SPELL_POWER_SOUL_SHARDS
@@ -1247,9 +1245,7 @@ function ChiStatus()
     elseif (class == DEATHKNIGHT) then
         status.runeEnabled = true
     end
-	print("chiType "..tostring(chiType))
     status.chiEnabled = not not chiType
-	print("status.chiEnabled "..tostring(status.chiEnabled))
     status.curChiType = chiType
 
     if (status.curUnit == "vehicle") then
@@ -1563,7 +1559,6 @@ function EventHandlers.PLAYER_LOGIN()
 end
 
 function EventHandlers.PLAYER_ENTERING_WORLD()
-	print("entering world")
     status.playerGUID = UnitGUID("player")
 
     if (CanExitVehicle() and UnitHasVehicleUI("player")) then
