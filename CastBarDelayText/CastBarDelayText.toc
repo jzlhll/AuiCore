@@ -2,7 +2,5 @@
 ## Title: CastBarDelay
 ## Notes: 显示施法延迟。
 ## Author: Allan
-## LoadOnDemand:
-## SavedVariables: 
 
-M.lua
+embeds.xml
