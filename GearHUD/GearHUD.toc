@@ -1,0 +1,5 @@
+## Interface: 80100
+## Title: GearHud 齿轮血量提示
+## SavedVariablesPerCharacter: GearHudSettings
+## Notes-zhCN: 模仿战争机器的齿轮血量提示, 在不同的阶段显示不同的材质。
+GearHUD.xml
