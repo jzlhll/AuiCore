@@ -1,0 +1,20 @@
+## Title: Comergy Redux
+## Version: r32
+## Interface: 80100
+## Title-zhCN: Comergy 能量监视
+## Notes-zhCN: 轻量美观能量值及资源点数监视的插件
+## Author: Asymptote & Allan
+## Notes: Simple, nice-looking power bar addon for all classes.
+## DefaultState: Enabled
+## SavedVariablesPerCharacter: Comergy_Config
+
+locales\localization.enUS.lua
+locales\localization.zhCN.lua
+
+comergy.lua
+comergy_utils.lua
+
+comergy.xml
+
+
+## X-Vendor: AbyUI
