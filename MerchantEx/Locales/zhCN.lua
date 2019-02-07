@@ -8,7 +8,7 @@
 
 if GetLocale() == "zhCN" then
 	MERCHANTEX_LOCALE = {
-		["title"] = "爱不易",
+		["title"] = "MerchantEx",
 		["auto options"] = "自动选项",
 		["repair"] = "修理装备",
 		["guild repair"] = "公会银行支付",
