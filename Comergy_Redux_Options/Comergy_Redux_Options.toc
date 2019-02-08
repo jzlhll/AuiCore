@@ -5,6 +5,8 @@
 ## Author: Asymptote
 ## Dependencies: Comergy_Redux
 ## LoadOnDemand: 1
+## Title-zhCN: Comergy 配置选项
+## Notes-zhCN: 轻量美观能量值及资源点数监视的插件
 ## X-Curse-Packaged-Version: r32
 ## X-Curse-Project-Name: Comergy Redux
 ## X-Curse-Project-ID: comergy-redux
@@ -15,7 +17,4 @@ locales\localization.zhCN.lua
 
 comergyopt.xml
 
-## Title-zhCN: |cff880303[爱不易]|r Comergy 配置选项
-## Notes-zhCN: 轻量美观能量值及资源点数监视的插件
-## X-Vendor: AbyUI
 

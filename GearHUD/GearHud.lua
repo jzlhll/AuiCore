@@ -50,7 +50,10 @@ GearHudSettings = {
 	scale = 1,
 }
 
+local IsInitPanel = false
 local function InitAddonPanel()
+	if IsInitPanel then return end
+	IsInitPanel = true
     local panel = CreateFrame("Frame", "GearHudBlizzOptions")
     panel.name = "GearHud齿轮血量提示"
     InterfaceOptions_AddCategory(panel)
