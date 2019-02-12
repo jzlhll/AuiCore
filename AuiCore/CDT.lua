@@ -4,7 +4,7 @@
 local AddonName, AddonTable = ...
 local Addon = LibStub('AceAddon-3.0'):GetAddon(AddonName)
 local C
-if not Addon.EnableCDT then
+if not Addon.Enables.EnableCDT then
 	return
 else
 C = Addon:NewModule("CastDelayBar", 'AceEvent-3.0', 'AceConsole-3.0')
