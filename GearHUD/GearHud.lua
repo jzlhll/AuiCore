@@ -162,7 +162,7 @@ function GearHud_OnEvent(event, arg1, arg2)
 		GearHud_Lock();
 		GearHud:Show()
 		GearHud_Update(0);
-		C_Timer.After(0.3, function() InitAddonPanel() end)
+		C_Timer.After(1, function() InitAddonPanel() end)
     elseif(event=="PLAYER_UNGHOST") then
         GearHud_Update(100)
         C_Timer.After(0.1, function() GearHud_Update() end)

@@ -1,0 +1,6 @@
+## Interface: 80100
+## Title: AuiCore
+## Notes: Allan整合的多个贴心功能
+## Author: Allan
+
+Core.xml

@@ -451,6 +451,37 @@ frame:RegisterEvent("MERCHANT_SHOW")
 frame:RegisterEvent("MERCHANT_CLOSED")
 frame:RegisterEvent("PLAYER_MONEY")
 
+--[[local IsInitPanel = false
+local function InitAddonPanel()
+	if IsInitPanel then return end
+	IsInitPanel = true
+    local panel = CreateFrame("Frame", "MerchantExOptions")
+    panel.name = "Merc修理与购买助手"
+    InterfaceOptions_AddCategory(panel)
+
+    local fs = panel:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+    fs:SetPoint("TOPLEFT", 10, -15)
+    fs:SetPoint("BOTTOMRIGHT", panel, "TOPRIGHT", 10, -45)
+    fs:SetJustifyH("LEFT")
+    fs:SetJustifyV("TOP")
+    fs:SetText("【MerchantEx自动修理与购买助手】")
+    local fs2 = panel:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    fs2:SetPoint("TOPLEFT", 10, -40)
+    fs2:SetPoint("BOTTOMRIGHT", fs, "TOPRIGHT", 0, -20)
+    fs2:SetJustifyH("LEFT")
+	fs2:SetJustifyV("TOP")
+    fs2:SetText("在·商人面板·右上也有设置按钮，自动出售灰色物品、自动修理、自动购入施法材料等功能。")
+
+	local button3 = CreateFrame("Button", nil, panel, "UIPanelButtonTemplate")
+    button3:SetText("设置")
+    button3:SetWidth(128)
+    button3:SetPoint("TOPLEFT", 200, -185)
+    button3:SetScript('OnClick', function()
+        while CloseWindows() do end
+        SlashCmdList["MERCHANTEX"]()
+    end)
+end --]]
+
 frame:SetScript("OnEvent", function(self, event)
 	if event == "VARIABLES_LOADED" then
 		if type(MerchantExDB) ~= "table" then
@@ -458,7 +489,7 @@ frame:SetScript("OnEvent", function(self, event)
 		end
 
 		if type(MerchantExDB.option) ~= "table" then
-			MerchantExDB.option = { repair = 1, sell = 1, buy = 1 }
+			MerchantExDB.option = { repair = 1, sell = 1, guild = 1 }
 		end
 
 		if type(MerchantExDB.exception) ~= "table" then
@@ -511,7 +542,6 @@ frame:SetScript("OnEvent", function(self, event)
                 return frame:Toggle()
             end)
         end
-
 	elseif event == "MERCHANT_SHOW" then
         if MerchantFrame:IsVisible() then
             addon.moneyBefore = GetMoney() or 0

@@ -4,5 +4,8 @@
   <Include file="Libs\AceEvent-3.0\AceEvent-3.0.xml"/>
   <Include file="Libs\AceHook-3.0\AceHook-3.0.xml"/>
   <!-- Include file="Libs\CallbackHandler-1.0\CallbackHandler-1.0.xml" /> -->
-  <Script file="M.lua" />
+  <Script file="Core.lua" />
+  <Script file="CDT.lua" />
+  <!-- Script file="SBuff_BuffTimer.lua" />
+  <Script file="BuffSizeAndCooldown.lua" /-->
 </Ui>

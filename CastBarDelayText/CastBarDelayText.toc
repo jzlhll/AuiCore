@@ -1,6 +1,0 @@
-## Interface: 80100
-## Title: CastBarDelay
-## Notes: 显示施法延迟。
-## Author: Allan
-
-embeds.xml

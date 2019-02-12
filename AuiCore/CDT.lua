@@ -1,10 +1,19 @@
 -----
 -- 爬取自网易有爱。而网易有爱爬取自duowan。
 -----
-CastDelayBar = LibStub("AceAddon-3.0"):NewAddon("CastDelayBar", "AceEvent-3.0", "AceHook-3.0");
-local C = CastDelayBar;
-C.enable = true;
-C.showremain = true;
+local AddonName, AddonTable = ...
+local Addon = LibStub('AceAddon-3.0'):GetAddon(AddonName)
+local C
+if not Addon.EnableCDT then
+	return
+else
+C = Addon:NewModule("CastDelayBar", 'AceEvent-3.0', 'AceConsole-3.0')
+--allan-- 【施法延迟时间文字】是否启用
+C.enable = true
+--allan-- 【施法延迟时间文字】显示倒计时还是显示正计时/总计时，当前%s1
+--allan-- %s1 true
+--allan-- %s1 false
+C.showremain = false
 
 local CHANNELDELAY = "|cffff2020%-.2f|r"
 local CASTDELAY = "|cffff2020%.1f|r"
@@ -20,7 +29,7 @@ local function SetOrHookScript(target,eventName,func)
 	end
 end
 
-function C:OnInitialize()
+function C:OnEnable()
 	self.playerName = UnitName("player");
 	self.delayText = CastingBarFrame:CreateFontString(nil, "ARTWORK");
 	self.delayText:SetPoint("RIGHT", CastingBarFrame, "RIGHT", -3, 2);
@@ -289,3 +298,4 @@ function C:CastingBarFrame_OnUpdate(frame, elapsed, ...)
 		end		
 	end
 end
+end -- end of if EnableCDT
