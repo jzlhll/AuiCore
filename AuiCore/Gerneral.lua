@@ -48,7 +48,7 @@ if Addon.Enables.FriendColor then
                 button.bname:SetFormattedText("|cff82c5ff%s|r",  accountName or UNKNOWN)
             end
         end
-    end)    
+    end)
 end
 -- 好友着色
 

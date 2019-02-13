@@ -3,15 +3,10 @@
 -----
 local AddonName, AddonTable = ...
 local Addon = LibStub('AceAddon-3.0'):GetAddon(AddonName)
-local C
 if Addon.Enables.CDT then
-	C = Addon:NewModule("CastDelayBar", 'AceEvent-3.0', 'AceConsole-3.0')
-	--allan-- 【施法延迟时间文字】是否启用
-	C.enable = true
-	--allan-- 【施法延迟时间文字】显示倒计时还是显示正计时/总计时，当前%s1
-	--allan-- %s1 true
-	--allan-- %s1 false
-	C.showremain = false
+	local C = Addon:NewModule("CastDelayBarMod", 'AceEvent-3.0', 'AceConsole-3.0')
+	C.enable = Addon.Enables.CDTEnabls.enable
+	C.showremain = Addon.Enables.CDTEnabls.showremain
 
 	local CHANNELDELAY = "|cffff2020%-.2f|r"
 	local CASTDELAY = "|cffff2020%.1f|r"
