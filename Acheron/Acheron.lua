@@ -19,6 +19,7 @@ along with Acheron.	If not, see <http://www.gnu.org/licenses/>.
 
 -- Upvalues
 local select, tinsert, tremove = select, tinsert, tremove
+local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
 
 --[[ ---------------------------------------------------------------------------
 	 Addon and libraries
@@ -153,7 +154,7 @@ function Acheron:DoEnable()
 	}
 	
 	for i = 1, #menuTypes do
-		tinsert(UnitPopupMenus[menuTypes[i]], #UnitPopupMenus[menuTypes[i]]-1, "SHOW_DEATH_REPORTS")
+		tinsert(UnitPopupMenus[menuTypes[i]] --, #UnitPopupMenus[menuTypes[i]]-1, "SHOW_DEATH_REPORTS")
 	--end
 
 	-- self:SecureHook("UnitPopup_ShowMenu")
@@ -357,10 +358,14 @@ end
 --[[ ---------------------------------------------------------------------------
 	 Handle combat log events
 ----------------------------------------------------------------------------- ]]
-function Acheron:COMBAT_LOG_EVENT_UNFILTERED(event, timeStamp, eventType, hideCaster, srcGUID, srcName, srcFlags, srcFlags2, dstGUID, dstName, dstFlags, dstFlags2, ...)
-  -- 4.2 added srcFlags2 after srcFlags and dstFlags2 after dstFlags
-  -- 4.1 added hideCaster param after eventType
-	-- Stop if this is a combat log event we don't care about
+function Acheron:COMBAT_LOG_EVENT_UNFILTERED()
+   					-- 4.2 added srcFlags2(allan改成srcRaidFlags) after srcFlags and dstFlags2（allan 改成dstRaidFlags） after dstFlags
+  					-- 4.1 added hideCaster param after eventType
+					-- Stop if this is a combat log event we don't care about
+	-- 8.1 allan修正数据变化
+	local timeStamp, eventType, hideCaster, srcGUID, srcName,
+		srcFlags, srcRaidFlags, dstGUID, dstName,dstFlags, dstRaidFlags,
+		a1, a2, a3, a4, a5, a6, a7, a8, a9, a10 = CombatLogGetCurrentEventInfo()
 	if not dstGUID then return end						  
 	if not self.combatLogs[dstGUID] then return end
 	
@@ -371,9 +376,13 @@ function Acheron:COMBAT_LOG_EVENT_UNFILTERED(event, timeStamp, eventType, hideCa
 		   eventType == "SPELL_AURA_APPLIED_DOSE" or
 		   eventType == "SPELL_AURA_REMOVED_DOSE"
 	then
-		self:HandleBuffEvent(event, timeStamp, eventType, hideCaster, srcGUID, srcName, srcFlags, srcFlags2, dstGUID, dstName, dstFlags, dstFlags2, ...)
+		self:HandleBuffEvent(timeStamp, eventType, hideCaster, srcGUID, 
+				srcName, srcFlags, srcRaidFlags, dstGUID, dstName, dstFlags, dstFlags2,
+					 a1, a2, a3, a4, a5, a6, a7, a8, a9, a10)
 	else
-		self:HandleHealthEvent(event, timeStamp, eventType, hideCaster, srcGUID, srcName, srcFlags, srcFlags2, dstGUID, dstName, dstFlags, dstFlags2, ...)
+		self:HandleHealthEvent(timeStamp, eventType, hideCaster, srcGUID,
+			 srcName, srcFlags, srcRaidFlags, dstGUID, dstName, dstFlags, dstFlags2,
+			  a1, a2, a3, a4, a5, a6, a7, a8, a9, a10)
 	end
 
 end
@@ -419,7 +428,7 @@ end
 --[[ ---------------------------------------------------------------------------
 	 Handle combat events that affect buffs (damage or healing)
 ----------------------------------------------------------------------------- ]]
-function Acheron:HandleBuffEvent(event, timeStamp, eventType, hideCaster, srcGUID, srcName, srcFlags, srcFlags2, dstGUID, dstName, dstFlags, dstFlags2, ...)
+function Acheron:HandleBuffEvent(timeStamp, eventType, hideCaster, srcGUID, srcName, srcFlags, srcFlags2, dstGUID, dstName, dstFlags, dstFlags2, ...)
 
 	local spellId = select(1, ...)
 	local spell = select(2, ...)
@@ -463,7 +472,7 @@ end
 --[[ ---------------------------------------------------------------------------
 	 Handle combat events that affect health (damage or healing)
 ----------------------------------------------------------------------------- ]]
-function Acheron:HandleHealthEvent(event, timeStamp, eventType, hideCaster, srcGUID, srcName, srcFlags, srcFlags2, dstGUID, dstName, dstFlags, dstFlags2, ...)
+function Acheron:HandleHealthEvent(timeStamp, eventType, hideCaster, srcGUID, srcName, srcFlags, srcFlags2, dstGUID, dstName, dstFlags, dstFlags2, ...)
  	
 	-- Initialize values		  
 	local amount = nil
