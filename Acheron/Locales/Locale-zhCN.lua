@@ -9,53 +9,53 @@ L["Toggle the Configuration Dialog"] = "打开配置窗口"
 L["show"] = "显示"
 L["Show Acheron Death Reports"] = "显示Acheron死亡报告"
 
-L["Hint"] = "\n\n|cffafa4ffLeft-click|r |cffffffffto show reports|r\n|cffafa4ffRight-click|r |cffffffffto show config|r"
+L["Hint"] = "\n\n|cffafa4ff左键点击|r |cffffffff显示报告|r\n|cffafa4ff右键点击|r |cffffffff显示设置|r"
 
 L["General"] = "一般选项"
 L["Enable"] = "启用"
 L["Enable or disable data collection"] = "启用或禁用数据收集"
 L["History"] = "历史"
-L["The amount of history, in seconds, of combat log to keep per report"] = true
+L["The amount of history, in seconds, of combat log to keep per report"] = "每个记录中每秒战斗记录的保存数量"
 L["Number of Reports"] = "报告数量"
-L["The total number of death reports to keep, 0 for no limit"] = true
+L["The total number of death reports to keep, 0 for no limit"] = "设置保存最多几份报告\n(0没有限制)"
 L["Clear Acheron When Joining Party/Raid"] = "当加入小队/团队时清除记录"
 L["Clear Acheron when joining party/raid (will confirm first if Confirm Clear is checked)"] = "当加入小队/团队时清除记录(如果确认清除已勾选)"
 L["Confirm Clear"] = "确认清除"
 L["Confirm before clearing any/all Acheron death reports"] = "在清除所有死因报告前确认"
-L["Clear Acheron?"] = true
-L["Clear Acheron for %s?"] = true
-L["Yes"] = true
-L["No"] = true
+L["Clear Acheron?"] = "清除所有的死亡报告？"
+L["Clear Acheron for %s?"] = "清除%s的死亡报告"
+L["Yes"] = "是"
+L["No"] = "否"
 L["Disable in PvP"] = "PvP 状态时取消"
 L["Automatically disables Acheron when entering a PvP zone"] = "進入 PvP区域时自动取消Acheron"
 
-L["Enable White List"] = true
-L["When the white list is enabled, only auras on the white list will be tracked."] = true
-L["Enable Black List"] = true
-L["When the black list is enabled, any auras on the black list will not be tracked."] = true
-L["Auras"] = true
-L["Aura"] = true
-L["List"] = true
-L["Select the desired list from the dropdown menu and enter the name of a buff or debuff to track."] = true
-L["You must select the list from the dropdown menu for which to add this aura"] = true
-L["You must enter a value for the aura name"] = true
-L["White List"] = true
-L["Black List"] = true
-L["Delete"] = true
-L["Are you sure you want to delete this aura from the white list?"] = true
-L["Are you sure you want to delete this aura from the black list?"] = true
+L["Enable White List"] = "启用白名单"
+L["When the white list is enabled, only auras on the white list will be tracked."] = "当启用白名单后只有在名单上的特效会被记录"
+L["Enable Black List"] = "启用黑名单"
+L["When the black list is enabled, any auras on the black list will not be tracked."] = "当启用黑名单后只有名单上的特效不会被记录"
+L["Auras"] = "特效"
+L["Aura"] = "特效"
+L["List"] = "列表"
+L["Select the desired list from the dropdown menu and enter the name of a buff or debuff to track."] = "在框中填入你想要追踪的增益或减益法术"
+L["You must select the list from the dropdown menu for which to add this aura"] = "你只能从已填入的特效列表中选择"
+L["You must enter a value for the aura name"] = "你必须填写特效名称"
+L["White List"] = "白名单"
+L["Black List"] = "黑名单"
+L["Delete"] = "删除"
+L["Are you sure you want to delete this aura from the white list?"] = "确认要把这个特效从白名单删除？"
+L["Are you sure you want to delete this aura from the black list?"] = "确认要把这个特效从黑名单删除？"
 
-L["Pets"] = true
-L["Show Pets"] = true
-L["Include pets in the dropdown list of available death reports"] = true
-L["Show Only My Pet"] = true
-L["Only show your own pet in the dropdown list of available death reports"] = true
+L["Pets"] = "宠物"
+L["Show Pets"] = "显示宠物伤害"
+L["Include pets in the dropdown list of available death reports"] = "在所有死亡报告中显示宠物伤害"
+L["Show Only My Pet"] = "只显示我的宠物伤害"
+L["Only show your own pet in the dropdown list of available death reports"] = "在所有死亡报告终止显示我的宠物伤害"
 
 L["Display"] = "显示选项"
 L["Font Size"] = "字体大小"
 L["The font size of the death report entries"] = "设置死亡报告字体大小"
 L["Timeline to Show"] = true
-L["If the main UI is displayed without a specific player chosen, display the last this number of death reports"] = true
+L["If the main UI is displayed without a specific player chosen, display the last this number of death reports"] = "如果主要窗口沒有特定玩家被选定，显示多少玩家的死亡报告"
 
 L["Profile: %s"] = "配置文件: %s"
 
@@ -72,21 +72,21 @@ L["Resist"] = "抵抗"
 
 -- report strings
 
-L["Filter"] = true
+L["Filter"] = "过滤"
 L["Show"] = "显示"
 L["Time to Show"] = "时间显示"
 L["Amount to Show >"] = "累计显示 >"
-L["Damage"] = true
-L["Healing"] = true
-L["Buffs"] = true
-L["Debuffs"] = true
+L["Damage"] = "伤害"
+L["Healing"] = "治疗"
+L["Buffs"] = "增益法术"
+L["Debuffs"] = "减益法术"
 
-L["Report"] = true
+L["Report"] = "死亡报告"
 L["Report To"] = "输出报告到"
 L["Whisper To"] = "密语给"
-L["Absolute Health"] = true
+L["Absolute Health"] = "实际血量"
 
-L["Clear"] = true
+L["Clear"] = "清除"
 L["Clear All"] = "清除所有"
 L["Ctrl-left-click a line in the combat log to report.\nAlt-left-click a line to report just that line."]  = true
 
@@ -106,6 +106,6 @@ L["Acheron: You are not in a raid"] = "Acheron: 你不在一个团队中"
 L["Acheron: You are not in a guild"] = "Acheron: 你不在一个公会中"
 L["Acheron: No such channel: %s"] = "Acheron: 没有此频道: %s"
 
-L["Ctrl-left-click to report from this point.\nAlt-left-click to report just this line."] = true
+L["Ctrl-left-click to report from this point.\nAlt-left-click to report just this line."] = "按 Ctrl-左键 报告此时间点的所有记录\n按 Alt-左键 报告此行记录"
 L["Critical"] = "爆击"
 L["Crushing"] = "碾压"
