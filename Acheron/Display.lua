@@ -24,7 +24,7 @@ along with Acheron.	If not, see <http://www.gnu.org/licenses/>.
 local L = LibStub("AceLocale-3.0"):GetLocale("Acheron")
 local GUI = LibStub("AceGUI-3.0")
 
-local VER = "20190209 Allan"
+local VER = "Allan8.1修复并汉化"
 
 
 --[[ ---------------------------------------------------------------------------

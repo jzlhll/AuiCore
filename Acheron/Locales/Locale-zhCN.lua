@@ -88,7 +88,7 @@ L["Absolute Health"] = "实际血量"
 
 L["Clear"] = "清除"
 L["Clear All"] = "清除所有"
-L["Ctrl-left-click a line in the combat log to report.\nAlt-left-click a line to report just that line."]  = true
+L["Ctrl-left-click a line in the combat log to report.\nAlt-left-click a line to report just that line."]  = "在战斗记录上按 Ctrl-左键 报告所有记录\n在战斗记录上按 Alt-左键 显示该条记录"
 
 L["say"] = "说"
 L["party"] = "小队"

@@ -33,7 +33,7 @@ local LDB = LibStub:GetLibrary("LibDataBroker-1.1")
 
 local menuTypes= {"SELF", "PARTY", "RAID_PLAYER", "PET"}
 
-local VER = "20190209 Allan"
+local VER = "Allan8.1修复并汉化"
 
 
 --[[ ---------------------------------------------------------------------------
