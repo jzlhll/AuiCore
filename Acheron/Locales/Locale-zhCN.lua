@@ -54,7 +54,7 @@ L["Only show your own pet in the dropdown list of available death reports"] = "�
 L["Display"] = "显示选项"
 L["Font Size"] = "字体大小"
 L["The font size of the death report entries"] = "设置死亡报告字体大小"
-L["Timeline to Show"] = true
+L["Timeline to Show"] = "显示的报告数量"
 L["If the main UI is displayed without a specific player chosen, display the last this number of death reports"] = "如果主要窗口沒有特定玩家被选定，显示多少玩家的死亡报告"
 
 L["Profile: %s"] = "配置文件: %s"

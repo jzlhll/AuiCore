@@ -33,8 +33,10 @@ local LDB = LibStub:GetLibrary("LibDataBroker-1.1")
 
 local menuTypes= {"SELF", "PARTY", "RAID_PLAYER", "PET"}
 
-local VER = "Allan8.1修复并汉化"
+local VER = "Allan8.1修复并全汉化"
 
+local HEALTH_TOOLTIP = "血量变化"
+local ATTACH_TOOLTIP = "攻击来源"
 
 --[[ ---------------------------------------------------------------------------
 	 Ace3 initialization
@@ -463,9 +465,9 @@ function Acheron:HandleBuffEvent(timeStamp, eventType, hideCaster, srcGUID, srcN
 		action = action .. " ("..debuffCount..")"
 	end
 
-	local msg = CombatLog_OnEvent(Blizzard_CombatLog_CurrentSettings, timeStamp, eventType, hideCaster, srcGUID, srcName, srcFlags, srcFlags2, dstGUID, dstName, dstFlags, dstFlags2, ...)
+	-- local msg = CombatLog_OnEvent(Blizzard_CombatLog_CurrentSettings, timeStamp, eventType, hideCaster, srcGUID, srcName, srcFlags, srcFlags2, dstGUID, dstName, dstFlags, dstFlags2, ...)
 	
-	self:TrackEvent(auraType, timeStamp, msg, dstGUID, 0, action, nil, nil, nil, nil, spellId)
+	self:TrackEvent(auraType, timeStamp, ATTACH_TOOLTIP, dstGUID, 0, action, nil, nil, nil, nil, spellId)
 	
 end
 
@@ -538,10 +540,10 @@ function Acheron:HandleHealthEvent(timeStamp, eventType, hideCaster, srcGUID, sr
 	if not amount and not action then return end
 	if amount > 0 then trackType = "HEAL" end
 	
-	local msg = CombatLog_OnEvent(Blizzard_CombatLog_CurrentSettings, timeStamp, eventType, hideCaster, srcGUID, srcName, srcFlags, srcFlags2, dstGUID, dstName, dstFlags, dstFlags2, ...)
+	-- local msg = CombatLog_OnEvent(Blizzard_CombatLog_CurrentSettings, timeStamp, eventType, hideCaster, srcGUID, srcName, srcFlags, srcFlags2, dstGUID, dstName, dstFlags, dstFlags2, ...)
 	
 	-- Track the event
-	self:TrackEvent(trackType, timeStamp, msg, dstGUID, amount, action, source, spell, isCrit, isCrush, spellId)
+	self:TrackEvent(trackType, timeStamp, HEALTH_TOOLTIP, dstGUID, amount, action, source, spell, isCrit, isCrush, spellId)
 	
 end
 
