@@ -321,9 +321,7 @@ end
 	 Show death reports from the unit right-click dropdown menu
 ----------------------------------------------------------------------------- ]]
 function Acheron:ShowDeathReportsFromUnitMenu()
-
 	Acheron:ShowDeathReports(Acheron:GetGUID(UIDROPDOWNMENU_INIT_MENU.name))
-
 end
 
 
@@ -518,7 +516,6 @@ function Acheron:PopulateEntries(id, reportNum)
 	self.frameReports:ReleaseChildren()
 	local name = Acheron:GetNameByGUID(id)
 	reportNum = tonumber(reportNum)
-
 	local reportSet = self:FilterReport(id, reportNum, self:GetProfileParam("reporttime"))
 	if not reportSet[#reportSet] then return end
 	local lastTimeStamp = reportSet[#reportSet].timeStamp

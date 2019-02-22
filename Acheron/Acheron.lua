@@ -149,19 +149,19 @@ function Acheron:DoEnable()
 	
 	self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	
-	--[[ Inject unit frame right-click menu option
+	-- Inject unit frame right-click menu option
 	UnitPopupButtons["SHOW_DEATH_REPORTS"] = {
-		text = "cesee",-- L["Show Acheron Death Reports"],
-		dist = 0,
+		text = L["Show Acheron Death Reports"],
+		dist = 1,
 		func = self.ShowDeathReportsFromUnitMenu
 	}
 	
 	for i = 1, #menuTypes do
-		tinsert(UnitPopupMenus[menuTypes[i]] --, #UnitPopupMenus[menuTypes[i]]-1, "SHOW_DEATH_REPORTS")
-	--end
+		tinsert(UnitPopupMenus[menuTypes[i]], #UnitPopupMenus[menuTypes[i]]-1, "SHOW_DEATH_REPORTS")
+	end
 
-	-- self:SecureHook("UnitPopup_ShowMenu")
-	-- ]]
+	self:SecureHook("UnitPopup_ShowMenu")
+
 end
 
 
@@ -188,7 +188,7 @@ function Acheron:DoDisable()
 	self:UnregisterEvent("UNIT_PORTRAIT_UPDATE")
 	self:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 
-	--[[Remove unit frame right-click menu option
+	-- Remove unit frame right-click menu option
 	for j = 1, #menuTypes do
 		local t = menuTypes[j]
 		for i = 1, #UnitPopupMenus[t] do
@@ -200,7 +200,7 @@ function Acheron:DoDisable()
 	end
 
 	self:UnhookAll()
-	--]] 
+	
 end
 
 
