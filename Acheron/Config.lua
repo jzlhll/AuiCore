@@ -34,7 +34,7 @@ auraListDropdown[L["White List"]] = L["White List"]
 auraListDropdown[L["Black List"]] = L["Black List"]
 
 Acheron.options = {
-	name = "Acheron死亡报告",
+	name = "Acheron死亡报告 Fixed by Allan",
 	handler = Acheron,
 	type = "group",
 	args = {

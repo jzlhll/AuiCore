@@ -194,22 +194,22 @@ function Acheron:CreateFrame()
 	g2:AddChild(wt)
 	f:AddChild(g2)
 
-	local bu = GUI:Create("Button")
+	--[[ local bu = GUI:Create("Button")
 	bu:SetText(L["Clear"])
 	bu:SetWidth(100)
 	bu:SetCallback("OnClick", function(widget,event,value)
 		if Acheron.availableReports.value then
 			if Acheron:GetProfileParam("confirmclear") then
-				local dialog = StaticPopup_Show("ACHERON_CLEAR", Acheron:GetNameByGUID(Acheron.availableReports.value))
+				local dialog = StaticPopup_Show("ACHERON_CLEAR", Acheron.availableReports.value)
 				if(dialog) then
        				dialog.data = Acheron.availableReports.value
    				end
-   			else
+			else 
    				Acheron:ClearReports(Acheron.availableReports.value)
 			end
 		end
 	end)
-	f:AddChild(bu)
+	f:AddChild(bu) ]]
 
 	local bu2 = GUI:Create("Button")
 	bu2:SetText(L["Clear All"])
@@ -306,8 +306,7 @@ function Acheron:GetAvailableReports()
 			local name = self:GetNameByGUID(id)
 			local class = self:GetNameClassByGUID(id)
 			local color = select(4,GetClassColor(name_color_classes[class]))
-			local showname = string.format(name_color_pattern, color, name)
-			acheronReports[name] = showname
+			acheronReports[name] = string.format(name_color_pattern, color, name)
 		end
 	end
 	
@@ -672,7 +671,11 @@ function Acheron:EntryToString(entry, name, lastTimeStamp)
 		formatStr = formatStr.."|cff%02X%02X00%+7d%s|r"
 		tinsert(printArgs, red)
 		tinsert(printArgs, green)
-		tinsert(printArgs, entry.amount)
+		local amt = entry.amount
+		-- if entry.overamount > 0 then
+		-- 	amt = amt.."(过量"..entry.overamount..")"
+		-- end
+		tinsert(printArgs, amt)
 		tinsert(printArgs, (entry.isCrit and "!") or (entry.isCrush and "*") or " ")
 	elseif entry.eventType == "DAMAGE" and entry.action then
 		formatStr = formatStr.."|cffaaaaaa%s|r"

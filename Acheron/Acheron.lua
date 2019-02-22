@@ -386,7 +386,8 @@ function Acheron:COMBAT_LOG_EVENT_UNFILTERED()
 	--elseif eventType == "SPELL_AURA_REFRESH" or eventType == "SPELL_AURA_BROKEN" then
 	--	print("not spellname "..tostring(a2).." auratype "..tostring(a4).." amount "..tostring(a5))
 	else
-	--	print(eventType.." ,a2="..tostring(a2).." ,a3="..tostring(a3).." ,a4="..tostring(a4).." ,a5="..tostring(a5).." ,a6="..tostring(a6))
+	-- print(eventType..",a1="..tostring(a1).." ,a2="..tostring(a2).." ,a3="..tostring(a3).." ,a4="..tostring(a4).." ,a5="..tostring(a5).." ,a6="..tostring(a6).." ,a7="..tostring(a7).." ,a8="..tostring(a8)
+	--	.." ,a9="..tostring(a9).." ,a10="..tostring(a10))
 		self:HandleHealthEvent(timeStamp, eventType, hideCaster, srcGUID,
 			 srcName, srcFlags, srcRaidFlags, dstGUID, dstName, dstFlags, dstFlags2,
 			  a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12)
@@ -461,9 +462,9 @@ function Acheron:HandleBuffEvent(timeStamp, eventType, hideCaster, srcGUID, srcN
 	local action = spell
 	
 	if eventType == "SPELL_AURA_REMOVED" then
-		action = "-" .. action
+		action = "- " .. action
 	else
-		action = "+" .. action
+		action = "+ " .. action
 	end
 	
 	-- type(auraCount) == "number" and 
@@ -484,6 +485,7 @@ function Acheron:HandleHealthEvent(timeStamp, eventType, hideCaster, srcGUID, sr
  	
 	-- Initialize values		  
 	local amount = nil
+	--local overamount = nil --增加过量伤害或者过量治疗
 	local action = nil
 	local missType = nil
 	local spellId, spell = ...
@@ -503,25 +505,40 @@ function Acheron:HandleHealthEvent(timeStamp, eventType, hideCaster, srcGUID, sr
 	if prefix == "SPELL" then
 		if suffix == "HEAL" or special == "HEAL" then
 			amount = select(4, ...)
+			--overamount = select(5, ...)
 			isCrit = select(7, ...)
 		elseif suffix == "DAMAGE" or suffix == "ENERGIZE" or special == "DAMAGE" then
 			amount = 0 - select(4, ...)
+			--overamount = 0 - select(5, ...)
 			isCrit = select(10, ...)
 		elseif suffix == "MISSED" or special == "MISSED" then
 			missType =  select(4, ...)
 		end
 	elseif suffix == "DAMAGE" then
 		spellId = nil
-		amount = 0 - select(1, ...)
-		spell = L["Melee"]
-		isCrit = select(10, ...)
-		isCrush = select(12, ...)
-
-		if prefix == "ENVIRONMENTAL" then
+		if prefix == "SWING" then
+			amount = 0 - select(1, ...)
+			--overamount = 0 - select(2, ...)
+			spell = L["Melee"]
+			isCrit = select(7, ...)
+			isCrush = select(9, ...)
+		elseif prefix == "ENVIRONMENTAL" then
+			amount = 0 - select(2, ...)
+			--overamount = 0 - select(3, ...)
 			source = L["Environment"]
+		else
+			amount = 0 - select(4, ...)
+			--overamount = 0 - select(5, ...)
+			spell = L["Melee"]
+			isCrit = select(10, ...)
+			isCrush = select(12, ...)
 		end
 	elseif suffix == "MISSED" then
-		missType =  select(1, ...)
+		if prefix == "SWING" then
+			missType =  select(1, ...)
+		else
+			missType =  select(4, ...)
+		end
 	end
 
 	-- Convert miss type to string
