@@ -380,11 +380,14 @@ function Acheron:COMBAT_LOG_EVENT_UNFILTERED()
 	then
 		self:HandleBuffEvent(timeStamp, eventType, hideCaster, srcGUID, 
 				srcName, srcFlags, srcRaidFlags, dstGUID, dstName, dstFlags, dstFlags2,
-					 a1, a2, a3, a4, a5, a6, a7, a8, a9, a10)
+					 a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12)
+	--elseif eventType == "SPELL_AURA_REFRESH" or eventType == "SPELL_AURA_BROKEN" then
+	--	print("not spellname "..tostring(a2).." auratype "..tostring(a4).." amount "..tostring(a5))
 	else
+	--	print(eventType.." ,a2="..tostring(a2).." ,a3="..tostring(a3).." ,a4="..tostring(a4).." ,a5="..tostring(a5).." ,a6="..tostring(a6))
 		self:HandleHealthEvent(timeStamp, eventType, hideCaster, srcGUID,
 			 srcName, srcFlags, srcRaidFlags, dstGUID, dstName, dstFlags, dstFlags2,
-			  a1, a2, a3, a4, a5, a6, a7, a8, a9, a10)
+			  a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12)
 	end
 
 end
@@ -435,7 +438,7 @@ function Acheron:HandleBuffEvent(timeStamp, eventType, hideCaster, srcGUID, srcN
 	local spellId = select(1, ...)
 	local spell = select(2, ...)
 	local auraType = select(4,...)
-	local debuffCount = select(5,...) or 1
+	local auraCount = select(5,...) or 1
 
 	if not spell then return end
 	
@@ -461,8 +464,9 @@ function Acheron:HandleBuffEvent(timeStamp, eventType, hideCaster, srcGUID, srcN
 		action = "+" .. action
 	end
 	
-	if debuffCount > 1 then
-		action = action .. " ("..debuffCount..")"
+	-- type(auraCount) == "number" and 
+	if auraCount > 1 then
+		action = action .. " ("..auraCount..")"
 	end
 
 	-- local msg = CombatLog_OnEvent(Blizzard_CombatLog_CurrentSettings, timeStamp, eventType, hideCaster, srcGUID, srcName, srcFlags, srcFlags2, dstGUID, dstName, dstFlags, dstFlags2, ...)
@@ -506,29 +510,18 @@ function Acheron:HandleHealthEvent(timeStamp, eventType, hideCaster, srcGUID, sr
 		end
 	elseif suffix == "DAMAGE" then
 		spellId = nil
-		if prefix == "SWING" then
-			amount = 0 - select(1, ...)
-			spell = L["Melee"]
-			isCrit = select(7, ...)
-			isCrush = select(9, ...)
-		elseif prefix == "RANGE" then
-			amount = 0 - select(4, ...)
-			isCrit = select(10, ...)
-		elseif prefix == "ENVIRONMENTAL" then
-			amount = 0 - select(2, ...)
-			spell = select(1, ...)
+		amount = 0 - select(1, ...)
+		spell = L["Melee"]
+		isCrit = select(10, ...)
+		isCrush = select(12, ...)
+
+		if prefix == "ENVIRONMENTAL" then
 			source = L["Environment"]
 		end
-	elseif prefix == "DAMAGE" and special ~= "MISSED" then
-		amount = 0 - select(4, ...)
 	elseif suffix == "MISSED" then
-		if prefix == "RANGE" then
-			missType =  select(4, ...)
-		else
-			missType =  select(1, ...)
-		end
+		missType =  select(1, ...)
 	end
-	
+
 	-- Convert miss type to string
 	if missType then
 		if missType == "DODGE" then amount, action = 0, L["Dodge"] end
@@ -538,6 +531,7 @@ function Acheron:HandleHealthEvent(timeStamp, eventType, hideCaster, srcGUID, sr
 	end
 	
 	if not amount and not action then return end
+	-- type(amount) == "number" and 
 	if amount > 0 then trackType = "HEAL" end
 	
 	-- local msg = CombatLog_OnEvent(Blizzard_CombatLog_CurrentSettings, timeStamp, eventType, hideCaster, srcGUID, srcName, srcFlags, srcFlags2, dstGUID, dstName, dstFlags, dstFlags2, ...)
