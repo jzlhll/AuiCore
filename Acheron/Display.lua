@@ -668,14 +668,18 @@ function Acheron:EntryToString(entry, name, lastTimeStamp)
 			green = 0
 		end
 	
-		formatStr = formatStr.."|cff%02X%02X00%+7d%s|r"
-		tinsert(printArgs, red)
-		tinsert(printArgs, green)
-		local amt = entry.amount
-		-- if entry.overamount > 0 then
-		-- 	amt = amt.."(过量"..entry.overamount..")"
-		-- end
-		tinsert(printArgs, amt)
+		if entry.overamount == 0 then
+			formatStr = formatStr.."|cff%02X%02X00%+7d%s|r"
+			tinsert(printArgs, red)
+			tinsert(printArgs, green)
+			tinsert(printArgs, entry.amount)
+		else
+			formatStr = formatStr.."|cff%02X%02X00%+7d("..L["Over"].."%+7d)%s|r"
+			tinsert(printArgs, red)
+			tinsert(printArgs, green)
+			tinsert(printArgs, entry.amount)
+			tinsert(printArgs, entry.overamount)
+		end
 		tinsert(printArgs, (entry.isCrit and "!") or (entry.isCrush and "*") or " ")
 	elseif entry.eventType == "DAMAGE" and entry.action then
 		formatStr = formatStr.."|cffaaaaaa%s|r"

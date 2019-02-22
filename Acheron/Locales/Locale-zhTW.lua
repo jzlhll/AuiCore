@@ -109,4 +109,5 @@ L["Ctrl-left-click to report from this point.\nAlt-left-click to report just thi
 L["Critical"] = "爆擊"
 L["Crushing"] = "碾壓"
 L["Font show size"] = "报告字体大小"
+L["Over"] = "包含过量"
 

@@ -485,7 +485,7 @@ function Acheron:HandleHealthEvent(timeStamp, eventType, hideCaster, srcGUID, sr
  	
 	-- Initialize values		  
 	local amount = nil
-	--local overamount = nil --增加过量伤害或者过量治疗
+	local overamount = nil --增加过量伤害或者过量治疗
 	local action = nil
 	local missType = nil
 	local spellId, spell = ...
@@ -505,11 +505,11 @@ function Acheron:HandleHealthEvent(timeStamp, eventType, hideCaster, srcGUID, sr
 	if prefix == "SPELL" then
 		if suffix == "HEAL" or special == "HEAL" then
 			amount = select(4, ...)
-			--overamount = select(5, ...)
+			overamount = select(5, ...)
 			isCrit = select(7, ...)
 		elseif suffix == "DAMAGE" or suffix == "ENERGIZE" or special == "DAMAGE" then
 			amount = 0 - select(4, ...)
-			--overamount = 0 - select(5, ...)
+			overamount = 0 - select(5, ...)
 			isCrit = select(10, ...)
 		elseif suffix == "MISSED" or special == "MISSED" then
 			missType =  select(4, ...)
@@ -518,17 +518,17 @@ function Acheron:HandleHealthEvent(timeStamp, eventType, hideCaster, srcGUID, sr
 		spellId = nil
 		if prefix == "SWING" then
 			amount = 0 - select(1, ...)
-			--overamount = 0 - select(2, ...)
+			overamount = 0 - select(2, ...)
 			spell = L["Melee"]
 			isCrit = select(7, ...)
 			isCrush = select(9, ...)
 		elseif prefix == "ENVIRONMENTAL" then
 			amount = 0 - select(2, ...)
-			--overamount = 0 - select(3, ...)
+			overamount = 0 - select(3, ...)
 			source = L["Environment"]
 		else
 			amount = 0 - select(4, ...)
-			--overamount = 0 - select(5, ...)
+			overamount = 0 - select(5, ...)
 			spell = L["Melee"]
 			isCrit = select(10, ...)
 			isCrush = select(12, ...)
@@ -552,11 +552,12 @@ function Acheron:HandleHealthEvent(timeStamp, eventType, hideCaster, srcGUID, sr
 	if not amount and not action then return end
 	-- type(amount) == "number" and 
 	if amount > 0 then trackType = "HEAL" end
+	if overamount == nil or overamount == -1 or overamount == 1 then overamount = 0 end
 	
 	-- local msg = CombatLog_OnEvent(Blizzard_CombatLog_CurrentSettings, timeStamp, eventType, hideCaster, srcGUID, srcName, srcFlags, srcFlags2, dstGUID, dstName, dstFlags, dstFlags2, ...)
 	
 	-- Track the event
-	self:TrackEvent(trackType, timeStamp, HEALTH_TOOLTIP, dstGUID, amount, action, source, spell, isCrit, isCrush, spellId)
+	self:TrackEvent(trackType, timeStamp, HEALTH_TOOLTIP, dstGUID, amount, action, source, spell, isCrit, isCrush, spellId, overamount)
 	
 end
 
@@ -565,7 +566,7 @@ local tblCache = setmetatable({}, {__mode='k'})
 --[[ ---------------------------------------------------------------------------
 	 Track a combat log event
 ----------------------------------------------------------------------------- ]]
-function Acheron:TrackEvent(eventType, timeStamp, msg, dstGUID, amount, action, source, spell, isCrit, isCrush, spellId)
+function Acheron:TrackEvent(eventType, timeStamp, msg, dstGUID, amount, action, source, spell, isCrit, isCrush, spellId, overamount)
 
 	local dstName=self:GetNameByGUID(dstGUID)
 	local latestLog = self.combatLogs[dstGUID].logs[self.combatLogs[dstGUID].last]
@@ -600,6 +601,7 @@ function Acheron:TrackEvent(eventType, timeStamp, msg, dstGUID, amount, action, 
 	entry.maxHealth = maxHealth
 	entry.pctHealth = pctHealth
 	entry.amount = amount
+	entry.overamount = overamount
 	entry.action = action
 	entry.source = source
 	entry.sourceClass = sourceClass

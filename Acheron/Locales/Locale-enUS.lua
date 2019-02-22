@@ -110,3 +110,4 @@ L["Critical"] = true
 L["Crushing"] = true
 
 L["Report Font show size"] = true
+L["Over"] = true
