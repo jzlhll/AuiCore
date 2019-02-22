@@ -1,7 +1,6 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("Acheron", "enUS", true)
 
 -- config strings
-
 L["config"] = true
 L["Toggle the Configuration Dialog"] = true
 
@@ -109,3 +108,5 @@ L["Acheron: No such channel: %s"] = true
 L["Ctrl-left-click to report from this point.\nAlt-left-click to report just this line."] = true
 L["Critical"] = true
 L["Crushing"] = true
+
+L["Report Font show size"] = true

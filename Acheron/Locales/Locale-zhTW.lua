@@ -108,4 +108,5 @@ L["Acheron: No such channel: %s"] = "Acheron: 沒有這個頻道"
 L["Ctrl-left-click to report from this point.\nAlt-left-click to report just this line."] = "按 Ctrl-left-click 回報此時間點的所有記錄\n按 Alt-left-click 回報此行記錄"
 L["Critical"] = "爆擊"
 L["Crushing"] = "碾壓"
+L["Font show size"] = "报告字体大小"
 

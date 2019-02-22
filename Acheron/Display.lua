@@ -24,7 +24,7 @@ along with Acheron.	If not, see <http://www.gnu.org/licenses/>.
 local L = LibStub("AceLocale-3.0"):GetLocale("Acheron")
 local GUI = LibStub("AceGUI-3.0")
 
-local VER = "Allan8.1修复并汉化"
+local VER = " Allan8.1修复并全汉化"
 
 
 --[[ ---------------------------------------------------------------------------
@@ -35,7 +35,7 @@ function Acheron:CreateFrame()
 	if self.frame then return end
 	
 	local f = GUI:Create("Frame")
-	f:SetTitle("Acheron"..VER)
+	f:SetTitle("Acheron "..VER)
 	f:SetStatusText("")
 	f:SetLayout("Flow")
 	f:SetWidth(700)
@@ -90,6 +90,16 @@ function Acheron:CreateFrame()
 	end)
 	g1:AddChild(s)
 	
+	local sliderfont = GUI:Create("Slider")
+	sliderfont:SetLabel(L["Font show size"])
+	sliderfont:SetWidth(150)
+	sliderfont:SetSliderValues(6, 22, 1)
+	sliderfont:SetValue(Acheron:GetProfileParam("fontsize"))
+	sliderfont:SetCallback("OnValueChanged", function(widget,event,value)
+		Acheron:SetProfileParam("fontsize", value)
+	end)
+	g1:AddChild(sliderfont)
+
 	local cbd = GUI:Create("CheckBox")
 	cbd:SetLabel(L["Damage"])
 	cbd:SetWidth(100)
@@ -182,7 +192,6 @@ function Acheron:CreateFrame()
 	wt:SetWidth(150)
 	wt:SetCallback("OnEnterPressed", function(widget,event,value) Acheron.whisperTarget = value end)
 	g2:AddChild(wt)
-	
 	f:AddChild(g2)
 
 	local bu = GUI:Create("Button")
@@ -216,7 +225,7 @@ function Acheron:CreateFrame()
 	
 	local th = GUI:Create("Label")
 	th:SetText(L["Ctrl-left-click a line in the combat log to report.\nAlt-left-click a line to report just that line."])
-	th:SetWidth(250)
+	th:SetWidth(300)
 	f:AddChild(th)
 		
 	local t = GUI:Create("TreeGroup")

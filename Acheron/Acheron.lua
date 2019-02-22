@@ -36,7 +36,7 @@ local menuTypes= {"SELF", "PARTY", "RAID_PLAYER", "PET"}
 local VER = "Allan8.1修复并全汉化"
 
 local HEALTH_TOOLTIP = "血量变化"
-local ATTACH_TOOLTIP = "攻击来源"
+local ATTACH_TOOLTIP = "来源"
 
 --[[ ---------------------------------------------------------------------------
 	 Ace3 initialization

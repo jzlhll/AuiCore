@@ -88,7 +88,7 @@ L["Absolute Health"] = "实际血量"
 
 L["Clear"] = "清除"
 L["Clear All"] = "清除所有"
-L["Ctrl-left-click a line in the combat log to report.\nAlt-left-click a line to report just that line."]  = "在战斗记录上按 Ctrl-左键 报告所有记录\n在战斗记录上按 Alt-左键 显示该条记录"
+L["Ctrl-left-click a line in the combat log to report.\nAlt-left-click a line to report just that line."]  = "在战斗记录上按 Ctrl-左键 报告所有记录\n在战斗记录上按  Alt-左键 显示该条记录"
 
 L["say"] = "说"
 L["party"] = "小队"
@@ -106,6 +106,7 @@ L["Acheron: You are not in a raid"] = "Acheron: 你不在一个团队中"
 L["Acheron: You are not in a guild"] = "Acheron: 你不在一个公会中"
 L["Acheron: No such channel: %s"] = "Acheron: 没有此频道: %s"
 
-L["Ctrl-left-click to report from this point.\nAlt-left-click to report just this line."] = "按 Ctrl-左键 报告此时间点的所有记录\n按 Alt-左键 报告此行记录"
+L["Ctrl-left-click to report from this point.\nAlt-left-click to report just this line."] = "按 Ctrl-左键 报告这一行到底的所有记录\n按  Alt-左键 报告这一行记录"
 L["Critical"] = "爆击"
 L["Crushing"] = "碾压"
+L["Font show size"] = "报告字体大小"
