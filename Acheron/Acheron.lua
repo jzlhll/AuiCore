@@ -47,6 +47,7 @@ function Acheron:OnInitialize()
 	self.combatLogs = {}
 	self.combatLogTimeline = {first = 1, last = 0, logs = {}}
 	self.guidNames = {}
+	self.guidNameClasses = {}
 	self.petOwner = {}
 	
 	self.solo = nil
@@ -276,9 +277,10 @@ function Acheron:ScanRaidParty()
 			
 			local id = UnitGUID(unit)
 			local name = UnitName(unit)
-			
+			local playerClass = select(1, UnitClass(unit))
 			if not self.combatLogs[id] and name ~= L["Unknown"]  then
 				self.guidNames[id] = name
+				self.guidNameClasses[id] = playerClass
 				self.combatLogs[id] = {first = 1, last = 1, logs = {}}
 				self.combatLogs[id].logs[1] = {first = 1, last = 0, log = {}}
 			end
@@ -668,12 +670,12 @@ end
 	 Get name form GUID
 ----------------------------------------------------------------------------- ]]
 function Acheron:GetNameByGUID(guid)
-
 	return Acheron.guidNames[guid]
-
 end
 
-
+function Acheron:GetNameClassByGUID(guid)
+	return Acheron.guidNameClasses[guid]
+end
 --[[ ---------------------------------------------------------------------------
 	 Returns a deep copy of the given table
 ----------------------------------------------------------------------------- ]]

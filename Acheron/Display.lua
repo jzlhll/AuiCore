@@ -93,7 +93,7 @@ function Acheron:CreateFrame()
 	local sliderfont = GUI:Create("Slider")
 	sliderfont:SetLabel(L["Font show size"])
 	sliderfont:SetWidth(150)
-	sliderfont:SetSliderValues(6, 22, 1)
+	sliderfont:SetSliderValues(8, 22, 1)
 	sliderfont:SetValue(Acheron:GetProfileParam("fontsize"))
 	sliderfont:SetCallback("OnValueChanged", function(widget,event,value)
 		Acheron:SetProfileParam("fontsize", value)
@@ -284,14 +284,30 @@ end
 --[[ ---------------------------------------------------------------------------
 	 Formulate the table of reports Acheron has
 ----------------------------------------------------------------------------- ]]
-function Acheron:GetAvailableReports()
+local name_color_pattern = "|c%s%s|r"
+local name_color_classes
 
+function Acheron:GetAvailableReports()
 	local acheronReports = {}
+
+	if name_color_classes == nil then
+		name_color_classes = {}
+		do
+			local localClass, class
+			for i = 1, GetNumClasses() do
+				localClass, class = GetClassInfo(i)
+				name_color_classes[localClass] = class
+			end
+		end
+	end
 
 	for id,_ in pairs(self.combatLogs) do
 		if self:IsDisplayGUID(id) then
 			local name = self:GetNameByGUID(id)
-			acheronReports[name] = name
+			local class = self:GetNameClassByGUID(id)
+			local color = select(4,GetClassColor(name_color_classes[class]))
+			local showname = string.format(name_color_pattern, color, name)
+			acheronReports[name] = showname
 		end
 	end
 	
