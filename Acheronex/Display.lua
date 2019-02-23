@@ -682,7 +682,7 @@ function Acheron:EntryToString(entry, name, lastTimeStamp)
 			tinsert(printArgs, green)
 			tinsert(printArgs, entry.amount)
 		else
-			formatStr = formatStr.."|cff%02X%02X00%+7d("..L["Over"].."%+7d)%s|r"
+			formatStr = formatStr.."|cff%02X%02X00%+7d(%+7d)%s|r"
 			tinsert(printArgs, red)
 			tinsert(printArgs, green)
 			tinsert(printArgs, entry.amount)

@@ -366,7 +366,7 @@ function Acheron:COMBAT_LOG_EVENT_UNFILTERED()
 	-- 8.1 allan修正数据变化
 	local timeStamp, eventType, hideCaster, srcGUID, srcName,
 		srcFlags, srcRaidFlags, dstGUID, dstName,dstFlags, dstRaidFlags,
-		a1, a2, a3, a4, a5, a6, a7, a8, a9, a10 = CombatLogGetCurrentEventInfo()
+		a1, a2, a3, a4, a5, a6, a7, a8, a9, a10 ,a11, a12 = CombatLogGetCurrentEventInfo()
 	if not dstGUID then return end						  
 	if not self.combatLogs[dstGUID] then return end
 	
@@ -377,14 +377,16 @@ function Acheron:COMBAT_LOG_EVENT_UNFILTERED()
 		   eventType == "SPELL_AURA_APPLIED_DOSE" or
 		   eventType == "SPELL_AURA_REMOVED_DOSE"
 	then
+	--print("A:"..eventType..",a1="..tostring(a1).." ,a2="..tostring(a2).." ,a3="..tostring(a3).." ,a4="..tostring(a4).." ,a5="..tostring(a5).." ,a6="..tostring(a6).." ,a7="..tostring(a7).." ,a8="..tostring(a8)
+	--	.." ,a9="..tostring(a9).." ,a10="..tostring(a10))
 		self:HandleBuffEvent(timeStamp, eventType, hideCaster, srcGUID, 
 				srcName, srcFlags, srcRaidFlags, dstGUID, dstName, dstFlags, dstFlags2,
 					 a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12)
 	--elseif eventType == "SPELL_AURA_REFRESH" or eventType == "SPELL_AURA_BROKEN" then
 	--	print("not spellname "..tostring(a2).." auratype "..tostring(a4).." amount "..tostring(a5))
 	else
-	-- print(eventType..",a1="..tostring(a1).." ,a2="..tostring(a2).." ,a3="..tostring(a3).." ,a4="..tostring(a4).." ,a5="..tostring(a5).." ,a6="..tostring(a6).." ,a7="..tostring(a7).." ,a8="..tostring(a8)
-	--	.." ,a9="..tostring(a9).." ,a10="..tostring(a10))
+	--print(eventType..",a1="..tostring(a1).." ,a2="..tostring(a2).." ,a3="..tostring(a3).." ,a4="..tostring(a4).." ,a5="..tostring(a5).." ,a6="..tostring(a6).." ,a7="..tostring(a7).." ,a8="..tostring(a8)
+	--	.." ,a9="..tostring(a9).." ,a10="..tostring(a10).." ,a11="..tostring(a11).." ,a12="..tostring(a12))
 		self:HandleHealthEvent(timeStamp, eventType, hideCaster, srcGUID,
 			 srcName, srcFlags, srcRaidFlags, dstGUID, dstName, dstFlags, dstFlags2,
 			  a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12)
@@ -492,7 +494,7 @@ function Acheron:HandleHealthEvent(timeStamp, eventType, hideCaster, srcGUID, sr
 	local isCrit = false
 	local isCrush = false
 	local trackType = "DAMAGE"
-	local tooltipinfo = L["直伤"]
+	local tooltipinfo = L["Damage"]
 	
 	-- special handling for Priest "Spirit of Redemption"
 	if spellId == 27827 then
@@ -504,9 +506,18 @@ function Acheron:HandleHealthEvent(timeStamp, eventType, hideCaster, srcGUID, sr
 	
 	if prefix == "SPELL" then
 		if suffix == "HEAL" or special == "HEAL" then
-			amount = select(4, ...)
-			overamount = select(5, ...)
-			isCrit = select(7, ...)
+			if special == "ABSORBED" then
+				tooltipinfo = L["Absorbed"]
+				amount = 0
+				overamount = select(11, ...)
+				spellId = select(8, ...)
+				spell = select(9, ...)
+			else
+				tooltipinfo = L["Healing"]
+				amount = select(4, ...)
+				overamount = select(5, ...)
+				isCrit = select(7, ...)
+			end
 		elseif suffix == "DAMAGE" or suffix == "ENERGIZE" or special == "DAMAGE" then
 			amount = 0 - select(4, ...)
 			overamount = 0 - select(5, ...)
@@ -554,10 +565,10 @@ function Acheron:HandleHealthEvent(timeStamp, eventType, hideCaster, srcGUID, sr
 	
 	if not amount and not action then return end
 	-- type(amount) == "number" and 
-	if amount > 0 then
+	if overamount == nil or overamount == -1 or overamount == 1 then overamount = 0 end
+	if amount > 0 or overamount > 0 then
 		trackType = "HEAL"
 	end
-	if overamount == nil or overamount == -1 or overamount == 1 then overamount = 0 end
 	
 	-- local msg = CombatLog_OnEvent(Blizzard_CombatLog_CurrentSettings, timeStamp, eventType, hideCaster, srcGUID, srcName, srcFlags, srcFlags2, dstGUID, dstName, dstFlags, dstFlags2, ...)
 	
