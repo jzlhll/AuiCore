@@ -35,8 +35,6 @@ local menuTypes= {"SELF", "PARTY", "RAID_PLAYER", "PET"}
 
 local VER = "Allan8.1修复并全汉化"
 
-local HEALTH_TOOLTIP = "血量变化"
-
 --[[ ---------------------------------------------------------------------------
 	 Ace3 initialization
 ----------------------------------------------------------------------------- ]]
@@ -462,10 +460,10 @@ function Acheron:HandleBuffEvent(timeStamp, eventType, hideCaster, srcGUID, srcN
 	
 	if eventType == "SPELL_AURA_REMOVED" then
 		action = "- " .. action
-		showinfo = auraType.."结束"
+		showinfo = auraType.."-"
 	else
 		action = "+ " .. action
-		showinfo = auraType.."开始"
+		showinfo = auraType.."+"
 	end
 	
 	-- type(auraCount) == "number" and 
@@ -494,6 +492,7 @@ function Acheron:HandleHealthEvent(timeStamp, eventType, hideCaster, srcGUID, sr
 	local isCrit = false
 	local isCrush = false
 	local trackType = "DAMAGE"
+	local tooltipinfo = L["直伤"]
 	
 	-- special handling for Priest "Spirit of Redemption"
 	if spellId == 27827 then
@@ -512,6 +511,9 @@ function Acheron:HandleHealthEvent(timeStamp, eventType, hideCaster, srcGUID, sr
 			amount = 0 - select(4, ...)
 			overamount = 0 - select(5, ...)
 			isCrit = select(10, ...)
+			if eventType == "SPELL_PERIODIC_DAMAGE" then
+				tooltipinfo = "DOT"
+			end
 		elseif suffix == "MISSED" or special == "MISSED" then
 			missType =  select(4, ...)
 		end
@@ -552,13 +554,15 @@ function Acheron:HandleHealthEvent(timeStamp, eventType, hideCaster, srcGUID, sr
 	
 	if not amount and not action then return end
 	-- type(amount) == "number" and 
-	if amount > 0 then trackType = "HEAL" end
+	if amount > 0 then
+		trackType = "HEAL"
+	end
 	if overamount == nil or overamount == -1 or overamount == 1 then overamount = 0 end
 	
 	-- local msg = CombatLog_OnEvent(Blizzard_CombatLog_CurrentSettings, timeStamp, eventType, hideCaster, srcGUID, srcName, srcFlags, srcFlags2, dstGUID, dstName, dstFlags, dstFlags2, ...)
 	
 	-- Track the event
-	self:TrackEvent(trackType, timeStamp, HEALTH_TOOLTIP, dstGUID, amount, action, source, spell, isCrit, isCrush, spellId, overamount)
+	self:TrackEvent(trackType, timeStamp, tooltipinfo, dstGUID, amount, action, source, spell, isCrit, isCrush, spellId, overamount)
 	
 end
 

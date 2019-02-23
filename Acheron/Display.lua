@@ -83,7 +83,7 @@ function Acheron:CreateFrame()
 	g1:AddChild(s)
 	
 	local s2 = GUI:Create("Slider")
-	s2:SetLabel(L["Damage Filtered"])
+	s2:SetLabel(L["Amount Filtered"])
 	s2:SetWidth(150)
 	s2:SetSliderValues(0, tonumber(Acheron:GetProfileParam("maxfiltereddamage")) or 2000, 20)
 	s2:SetValue(Acheron:GetProfileParam("reportthreshold"))
@@ -639,6 +639,12 @@ function Acheron:FilterReport(id, reportNum, seconds, onlyOne)
 
 end
 
+local colors_marix = {
+	["BUFF+"] = "|cff43CD80%s|r",
+	["BUFF-"] = "|cff43CD80%s|r",
+	["DEBUFF+"] = "|cffff8000%s|r",
+	["DEBUFF-"] = "|cffff8000%s|r",
+}
 
 --[[ ---------------------------------------------------------------------------
 	 Formats a death report entry into a displayable string
@@ -660,7 +666,6 @@ function Acheron:EntryToString(entry, name, lastTimeStamp)
 			tinsert(printArgs, entry.pctHealth)
 		end
 	end
-		
 	-- either add the special action or add the health damage/heal
 	if ((entry.eventType == "HEAL" or entry.eventType == "DAMAGE") and (not entry.action)) then
 		local red = 255
@@ -669,9 +674,13 @@ function Acheron:EntryToString(entry, name, lastTimeStamp)
 		if entry.eventType == "HEAL" then
 			red = 0
 		else
-			green = 0
+			if "DOT" == entry.msg then
+				green = 128
+			else
+				green = 0
+			end
 		end
-	
+
 		if entry.overamount == 0 then
 			formatStr = formatStr.."|cff%02X%02X00%+7d%s|r"
 			tinsert(printArgs, red)
@@ -688,11 +697,14 @@ function Acheron:EntryToString(entry, name, lastTimeStamp)
 	elseif entry.eventType == "DAMAGE" and entry.action then
 		formatStr = formatStr.."|cffaaaaaa%s|r"
 		tinsert(printArgs, entry.action)
-	elseif entry.action then
-		formatStr = formatStr.."%s"
+	elseif entry.action then -- BUFF DEBUFF + -
+		if entry.msg then--print(entry.msg) end
+			formatStr = formatStr..colors_marix[entry.msg]
+		else
+			formatStr = formatStr.."%s"
+		end
 		tinsert(printArgs, entry.action)
 	end
-			
 	-- if there's a source for the action, add it
 	if entry.source then
 		local classColor = nil
