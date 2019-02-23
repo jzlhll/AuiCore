@@ -34,14 +34,19 @@ auraListDropdown[L["White List"]] = L["White List"]
 auraListDropdown[L["Black List"]] = L["Black List"]
 
 Acheron.options = {
-	name = "Acheron死亡报告 Fixed by Allan",
+	name = "Acheron死亡报告ex",
 	handler = Acheron,
 	type = "group",
 	args = {
+		intro = {
+			order = 0,
+			type = "description",
+			name = L["Main Description"],
+		},
 		general = {
 			type = "group",
 			name = L["General"],
-			order = 0,
+			order = 1,
 			set = "SetProfileParam",
 			get = "GetProfileParam",
 			cmdHidden = true,
@@ -102,6 +107,15 @@ Acheron.options = {
 					width = "full",
 					order = 5,
 				},
+				maxfiltereddamage = {
+					type = "input",
+					name = L["Max Damage Filtered amount"],
+					order = 6,
+					set = function(info, v)
+						Acheron:SetProfileParam("maxfiltereddamage", v)
+						Acheron:ChangeDamageFilteredSlide()
+				  	end	
+				},
 			},
 		},
 		auras = {
@@ -110,7 +124,7 @@ Acheron.options = {
 			set = "SetProfileParam",
 			get = "GetProfileParam",
 			cmdHidden = true,
-			order = 1,
+			order = 2,
 			args = {
 				enablewhitelist = {
 					type = "toggle",
@@ -189,7 +203,7 @@ Acheron.options = {
 		pets = {
 			type = "group",
 			name = L["Pets"],
-			order = 2,
+			order = 3,
 			set = "SetProfileParam",
 			get = "GetProfileParam",
 			cmdHidden = true,
@@ -226,7 +240,7 @@ Acheron.options = {
 		display = {
 			type = "group",
 			name = L["Display"],
-			order = 3,
+			order = 4,
 			set = "SetProfileParam",
 			get = "GetProfileParam",
 			cmdHidden = true,

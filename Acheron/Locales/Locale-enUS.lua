@@ -73,7 +73,7 @@ L["Resist"] = true
 L["Filter"] = true
 L["Show"] = true
 L["Time to Show"] = true
-L["Amount to Show >"] = true
+L["Damage Filtered"] = true
 L["Damage"] = true
 L["Healing"] = true
 L["Buffs"] = true
@@ -111,3 +111,5 @@ L["Crushing"] = true
 
 L["Report Font show size"] = true
 L["Over"] = true
+L["Main Description"] = "This is an addon for count `Buff`, `Debuff` and `Damage`, for show 0s~60s' status. Fixed By allan"
+L["Max Damage Filtered amount"] = true

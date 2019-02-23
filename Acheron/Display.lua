@@ -30,6 +30,12 @@ local VER = " Allan8.1修复并全汉化"
 --[[ ---------------------------------------------------------------------------
 	 Create the main display frame
 ----------------------------------------------------------------------------- ]]
+function Acheron:ChangeDamageFilteredSlide()
+	if self.damageFilterSlider then
+		self.damageFilterSlider:SetSliderValues(0, tonumber(Acheron:GetProfileParam("maxfiltereddamage")) or 2000, 200)
+	end
+end
+
 function Acheron:CreateFrame()
 
 	if self.frame then return end
@@ -76,19 +82,20 @@ function Acheron:CreateFrame()
 	end)
 	g1:AddChild(s)
 	
-	local s = GUI:Create("Slider")
-	s:SetLabel(L["Amount to Show >"])
-	s:SetWidth(150)
-	s:SetSliderValues(0, 1000, 10)
-	s:SetValue(Acheron:GetProfileParam("reportthreshold"))
-	s:SetCallback("OnValueChanged", function(widget,event,value)
+	local s2 = GUI:Create("Slider")
+	s2:SetLabel(L["Damage Filtered"])
+	s2:SetWidth(150)
+	s2:SetSliderValues(0, tonumber(Acheron:GetProfileParam("maxfiltereddamage")) or 2000, 20)
+	s2:SetValue(Acheron:GetProfileParam("reportthreshold"))
+	s2:SetCallback("OnValueChanged", function(widget,event,value)
 		Acheron:SetProfileParam("reportthreshold", value)
 		local status = Acheron.frameReports.status or Acheron.frameReports.localstatus
 		if status and status.selected then
 			Acheron:PopulateEntries(strsplit(":", status.selected))
 		end
 	end)
-	g1:AddChild(s)
+	g1:AddChild(s2)
+	self.damageFilterSlider = s2
 	
 	local sliderfont = GUI:Create("Slider")
 	sliderfont:SetLabel(L["Font show size"])

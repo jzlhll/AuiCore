@@ -36,7 +36,6 @@ local menuTypes= {"SELF", "PARTY", "RAID_PLAYER", "PET"}
 local VER = "Allan8.1修复并全汉化"
 
 local HEALTH_TOOLTIP = "血量变化"
-local ATTACH_TOOLTIP = "来源"
 
 --[[ ---------------------------------------------------------------------------
 	 Ace3 initialization
@@ -442,7 +441,7 @@ function Acheron:HandleBuffEvent(timeStamp, eventType, hideCaster, srcGUID, srcN
 	local spell = select(2, ...)
 	local auraType = select(4,...)
 	local auraCount = select(5,...) or 1
-
+	local showinfo = nil
 	if not spell then return end
 	
 	-- special handler for DK "Shadow of Death" ghouling and Priest "Spirit of Redemption"
@@ -463,8 +462,10 @@ function Acheron:HandleBuffEvent(timeStamp, eventType, hideCaster, srcGUID, srcN
 	
 	if eventType == "SPELL_AURA_REMOVED" then
 		action = "- " .. action
+		showinfo = auraType.."结束"
 	else
 		action = "+ " .. action
+		showinfo = auraType.."开始"
 	end
 	
 	-- type(auraCount) == "number" and 
@@ -474,7 +475,7 @@ function Acheron:HandleBuffEvent(timeStamp, eventType, hideCaster, srcGUID, srcN
 
 	-- local msg = CombatLog_OnEvent(Blizzard_CombatLog_CurrentSettings, timeStamp, eventType, hideCaster, srcGUID, srcName, srcFlags, srcFlags2, dstGUID, dstName, dstFlags, dstFlags2, ...)
 	
-	self:TrackEvent(auraType, timeStamp, ATTACH_TOOLTIP, dstGUID, 0, action, nil, nil, nil, nil, spellId)
+	self:TrackEvent(auraType, timeStamp, showinfo, dstGUID, 0, action, nil, nil, nil, nil, spellId)
 	
 end
 
@@ -562,6 +563,8 @@ function Acheron:HandleHealthEvent(timeStamp, eventType, hideCaster, srcGUID, sr
 end
 
 local tblCache = setmetatable({}, {__mode='k'})
+local BE_SAVE_CPU = true
+local lastRemoveTimeStamp = 0
 
 --[[ ---------------------------------------------------------------------------
 	 Track a combat log event
@@ -615,16 +618,18 @@ function Acheron:TrackEvent(eventType, timeStamp, msg, dstGUID, amount, action, 
 	latestLog.log[latestLog.last] = entry
 
 	-- Remove any entries that are older than our threshold
-	for i = latestLog.first, latestLog.last do
-	
-		if (latestLog.log[i].timeStamp >= (timeStamp - self:GetProfileParam("history"))) then
-			latestLog.first = i;
-			break
-		else
-			tblCache[latestLog.log[i]] = true
-			latestLog.log[i] = nil
+	if (not BE_SAVE_CPU) or lastRemoveTimeStamp + 1 < timeStamp then
+		lastRemoveTimeStamp = timeStamp
+		local expireTime = self:GetProfileParam("history")
+		for i = latestLog.first, latestLog.last do
+			if (latestLog.log[i].timeStamp >= (timeStamp - expireTime)) then
+				latestLog.first = i;
+				break
+			else
+				tblCache[latestLog.log[i]] = true
+				latestLog.log[i] = nil
+			end
 		end
-	
 	end
 end
 
