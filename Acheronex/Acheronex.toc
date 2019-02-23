@@ -1,7 +1,9 @@
 ## Interface: 80100
-## Title: Acheron
+## Title: Acheronex
+## Title-zhCN: Acheronex死亡报告
 ## Notes: Death reports
-## Author: Nikkodemus, Zyzx
+## Notes-zhCN: 死亡报告
+## Author: Nikkodemus, Zyzx, Allan
 ## DefaultState: enabled
 ## X-Category: Combat
 ## OptionalDeps: Ace3, LibLogger-1.0
@@ -28,7 +30,7 @@ Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 
 Locales.xml
 
-Acheron.lua
+Acheronex.lua
 Config.lua
 Display.lua
 
