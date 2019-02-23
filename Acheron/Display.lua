@@ -40,20 +40,15 @@ function Acheron:CreateFrame()
 
 	if self.frame then return end
 	
-	local f = GUI:Create("Frame")
+	local f = GUI:Create("Window")
 	f:SetTitle("Acheron "..VER)
 	f:SetStatusText("")
 	f:SetLayout("Flow")
-	f:SetWidth(700)
-	f:SetHeight(650)
+	f:SetWidth(630)
+	f:SetHeight(700)
 	f.width = "fill"
 	f.frame:SetFrameStrata("HIGH")
-	
-	local g1 = GUI:Create("InlineGroup")
-	g1:SetTitle(L["Filter"])
-	g1:SetLayout("Flow")
-	g1.width = "fill"
-	
+
 	local ds = GUI:Create("Dropdown")
 	ds:SetLabel(L["Show"])
 	ds:SetWidth(125)
@@ -66,7 +61,7 @@ function Acheron:CreateFrame()
 		end
  		Acheron:ShowDeathReports(value)
 	end)
-	g1:AddChild(ds)
+	f:AddChild(ds)
 	
 	local s = GUI:Create("Slider")
 	s:SetLabel(L["Time to Show"])
@@ -80,7 +75,7 @@ function Acheron:CreateFrame()
 			Acheron:PopulateEntries(strsplit(":", status.selected))
 		end
 	end)
-	g1:AddChild(s)
+	f:AddChild(s)
 	
 	local s2 = GUI:Create("Slider")
 	s2:SetLabel(L["Amount Filtered"])
@@ -94,7 +89,7 @@ function Acheron:CreateFrame()
 			Acheron:PopulateEntries(strsplit(":", status.selected))
 		end
 	end)
-	g1:AddChild(s2)
+	f:AddChild(s2)
 	self.damageFilterSlider = s2
 	
 	local sliderfont = GUI:Create("Slider")
@@ -105,11 +100,11 @@ function Acheron:CreateFrame()
 	sliderfont:SetCallback("OnValueChanged", function(widget,event,value)
 		Acheron:SetProfileParam("fontsize", value)
 	end)
-	g1:AddChild(sliderfont)
+	f:AddChild(sliderfont)
 
 	local cbd = GUI:Create("CheckBox")
 	cbd:SetLabel(L["Damage"])
-	cbd:SetWidth(100)
+	cbd:SetWidth(80)
 	cbd:SetValue(Acheron:GetProfileParam("showdamage"))
 	cbd:SetCallback("OnValueChanged", function(widget,event,value)
 		Acheron:SetProfileParam("showdamage", value)
@@ -118,11 +113,11 @@ function Acheron:CreateFrame()
 			Acheron:PopulateEntries(strsplit(":", status.selected))
 		end
 	end)
-	g1:AddChild(cbd)
+	f:AddChild(cbd)
 	
 	local cbh = GUI:Create("CheckBox")
 	cbh:SetLabel(L["Healing"])
-	cbh:SetWidth(100)
+	cbh:SetWidth(80)
 	cbh:SetValue(Acheron:GetProfileParam("showhealing"))
 	cbh:SetCallback("OnValueChanged", function(widget,event,value)
 		Acheron:SetProfileParam("showhealing", value)
@@ -131,11 +126,11 @@ function Acheron:CreateFrame()
 			Acheron:PopulateEntries(strsplit(":", status.selected))
 		end
 	end)
-	g1:AddChild(cbh)
+	f:AddChild(cbh)
 	
 	local cbb = GUI:Create("CheckBox")
 	cbb:SetLabel(L["Buffs"])
-	cbb:SetWidth(100)
+	cbb:SetWidth(90)
 	cbb:SetValue(Acheron:GetProfileParam("showbuff"))
 	cbb:SetCallback("OnValueChanged", function(widget,event,value)
 		Acheron:SetProfileParam("showbuff", value)
@@ -144,11 +139,11 @@ function Acheron:CreateFrame()
 			Acheron:PopulateEntries(strsplit(":", status.selected))
 		end
 	end)
-	g1:AddChild(cbb)
+	f:AddChild(cbb)
 	
 	local cbdb = GUI:Create("CheckBox")
 	cbdb:SetLabel(L["Debuffs"])
-	cbdb:SetWidth(100)
+	cbdb:SetWidth(90)
 	cbdb:SetValue(Acheron:GetProfileParam("showdebuff"))
 	cbdb:SetCallback("OnValueChanged", function(widget,event,value)
 		Acheron:SetProfileParam("showdebuff", value)
@@ -157,9 +152,9 @@ function Acheron:CreateFrame()
 			Acheron:PopulateEntries(strsplit(":", status.selected))
 		end
 	end)
-	g1:AddChild(cbdb)
+	f:AddChild(cbdb)
 	
-	f:AddChild(g1)
+	-- f:AddChild(g1)
 	
 	local g2 = GUI:Create("InlineGroup")
 	g2:SetTitle(L["Report"])
@@ -168,7 +163,7 @@ function Acheron:CreateFrame()
 	
 	local cba = GUI:Create("CheckBox")
 	cba:SetLabel(L["Absolute Health"])
-	cba:SetWidth(125)
+	cba:SetWidth(135)
 	cba:SetValue(Acheron:GetProfileParam("abshealth"))
 	cba:SetCallback("OnValueChanged", function(widget,event,value)
 		Acheron:SetProfileParam("abshealth", value)
